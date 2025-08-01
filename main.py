@@ -308,7 +308,7 @@ def get_time():
     """
     获取时间戳
     """
-    return {"t": str(int(time.time() * 1000)}
+    return {"t": str(int(time.time() * 1000))}
 
 
 def get_app_token(login_token):
