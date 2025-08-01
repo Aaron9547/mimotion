@@ -303,7 +303,6 @@ def main(_user, _passwd, _step):
     print(result)
     return result
 
-import time
 def get_time():
     """
     获取时间戳
