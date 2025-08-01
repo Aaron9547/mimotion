@@ -303,15 +303,12 @@ def main(_user, _passwd, _step):
     print(result)
     return result
 
-
+import time
 def get_time():
     """
     获取时间戳
     """
-    url = 'http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp'
-    response = requests.get(url, headers=headers).json()
-    t = response['data']['t']
-    return t
+    return {"t": str(int(time.time() * 1000)}
 
 
 def get_app_token(login_token):
