@@ -1,6 +1,16 @@
 """
 主程序脚本
 """
+import json
+import random
+import re
+import json
+import sys
+import time
+from urllib.parse import quote
+
+import requests
+
 from service.zepplife import ZeppLife
 
 def main(_user, _passwd, _step):
@@ -524,5 +534,6 @@ if __name__ == "__main__":
             exit(0)
     else:
         print('用户名和密码数量不对')
+
 
 
