@@ -477,7 +477,7 @@ class ToPush:
 
 if __name__ == "__main__":
     # Push Mode
-    # print(sys.argv)
+    print(sys.argv)
     try:
         Pm = sys.argv[1]
         pkey = sys.argv[2]
@@ -524,4 +524,5 @@ if __name__ == "__main__":
             exit(0)
     else:
         print('用户名和密码数量不对')
+
 
