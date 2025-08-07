@@ -516,8 +516,8 @@ if __name__ == "__main__":
                 print(f"已设置为随机步数（{setp_array[0]}-{setp_array[1]}）")
             elif str(step) == '0':
                 step = ''
-            zl.start(account, password, step)
-            to_push.push_msg += f"{account}****{password}: 修改步数（{step}）" + '\n'
+            zl.start(user, passwd, step)
+            to_push.push_msg += f"{user}****{passwd}: 修改步数（{step}）" + '\n'
 
         push = {
             'wx': to_push.to_push_wx,
@@ -534,6 +534,7 @@ if __name__ == "__main__":
             exit(0)
     else:
         print('用户名和密码数量不对')
+
 
 
 
