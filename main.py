@@ -1,79 +1,7 @@
 """
 主程序脚本
 """
-# -*- coding: utf8 -*-
-# python >=3.8
-
-import json
-import random
-import re
-import json
-import sys
-import time
-from urllib.parse import quote
-
-import requests
-
-now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-headers = {
-    'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 9; MI 6 MIUI/20.6.18)'
-}
-
-
-def get_code(location):
-    """
-    获取登录code
-    """
-    code_pattern = re.compile("(?<=access=).*?(?=&)")
-    code = code_pattern.findall(location)[0]
-    return code
-
-
-def login(_user, password):
-    """
-    登录
-    """
-    url1 = "https://api-user.huami.com/registrations/+86" + _user + "/tokens"
-    _headers = {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-        "User-Agent": "MiFit/4.6.0 (iPhone; iOS 14.0.1; Scale/2.00)"
-    }
-    data1 = {
-        "client_id": "HuaMi",
-        "password": f"{password}",
-        "redirect_uri": "https://s3-us-west-2.amazonaws.com/hm-registration/successsignin.html",
-        "token": "access"
-    }
-    r1 = requests.post(url1, data=data1, headers=_headers, allow_redirects=False)
-    try:
-        location = r1.headers["Location"]
-        code = get_code(location)
-    except:
-        return 0, 0
-    # print("access_code获取成功！")
-    # print(code)
-
-    url2 = "https://account.huami.com/v2/client/login"
-    data2 = {
-        "app_name": "com.xiaomi.hm.health",
-        "app_version": "4.6.0",
-        "code": f"{code}",
-        "country_code": "CN",
-        "device_id": "2C8B4939-0CCD-4E94-8CBA-CB8EA6E613A1",
-        "device_model": "phone",
-        "grant_type": "access_token",
-        "third_name": "huami_phone",
-    }
-    r2 = requests.post(url2, data=data2, headers=_headers).json()
-    login_token = r2["token_info"]["login_token"]
-    # print("login_token获取成功！")
-    # print(login_token)
-    userid = r2["token_info"]["user_id"]
-    # print("userid获取成功！")
-    # print(userid)
-
-    return login_token, userid
-
+from service.zepplife import ZeppLife
 
 def main(_user, _passwd, _step):
     """
@@ -569,7 +497,7 @@ if __name__ == "__main__":
     user_list = user.split('#')
     passwd_list = passwd.split('#')
     setp_array = step.split('-')
-
+    zl = ZeppLife()
     if len(user_list) == len(passwd_list):
         to_push.push_msg = ''
         for user, passwd in zip(user_list, passwd_list):
@@ -578,7 +506,8 @@ if __name__ == "__main__":
                 print(f"已设置为随机步数（{setp_array[0]}-{setp_array[1]}）")
             elif str(step) == '0':
                 step = ''
-            to_push.push_msg += main(user, passwd, step) + '\n'
+            zl.start(account, password, step)
+            to_push.push_msg += f"{account}****{password}: 修改步数（{step}）" + '\n'
 
         push = {
             'wx': to_push.to_push_wx,
@@ -595,3 +524,4 @@ if __name__ == "__main__":
             exit(0)
     else:
         print('用户名和密码数量不对')
+
