@@ -159,8 +159,8 @@ class ZeppLife:
         """ 启动刷步 """
         hour = time.strptime(time.ctime()).tm_hour
         print(f"当前时间 [{hour}]  不宜同步。建议同步时间：8:00 ~ 21:00。")
-        if not 7 <= hour <= 22:
-            raise Exception('当前时间不宜同步。建议同步时间：8:00 ~ 21:00')
+        # if not 7 <= hour <= 22:
+        #    raise Exception('当前时间不宜同步。建议同步时间：8:00 ~ 21:00')
         account = f'+86{account}' if re.fullmatch(phone_regex, account) else account
         step = step if step else random.randint(18000, 20000)
         access_code = self._get_access_code(account, password)
