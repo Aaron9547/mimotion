@@ -517,7 +517,7 @@ if __name__ == "__main__":
             elif str(step) == '0':
                 step = ''
             zl.start(user, passwd, step)
-            to_push.push_msg += f"{user}****{passwd}: 修改步数（{step}）" + '\n'
+            to_push.push_msg += f"用户：{user} ：修改步数（{step}）" + '\n\n\n'
 
         push = {
             'wx': to_push.to_push_wx,
@@ -534,6 +534,7 @@ if __name__ == "__main__":
             exit(0)
     else:
         print('用户名和密码数量不对')
+
 
 
 
