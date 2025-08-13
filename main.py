@@ -540,8 +540,10 @@ class ToPush:
 
 if __name__ == "__main__":
     print("任务启动")
+    start()
 
     
+
 
 
 
