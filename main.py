@@ -488,6 +488,8 @@ class ToPush:
 if __name__ == "__main__":
     # Push Mode
     print(sys.argv)
+    print("开始自动任务")
+    exit(1)
     try:
         Pm = sys.argv[1]
         pkey = sys.argv[2]
@@ -503,7 +505,7 @@ if __name__ == "__main__":
     except IndexError as e:
         print("参数有误: " + str(e))
         exit(1)
-
+    
     user_list = user.split('#')
     passwd_list = passwd.split('#')
     setp_array = step.split('-')
@@ -534,6 +536,7 @@ if __name__ == "__main__":
             exit(0)
     else:
         print('用户名和密码数量不对')
+
 
 
 
