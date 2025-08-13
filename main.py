@@ -13,6 +13,58 @@ import requests
 
 from service.zepplife import ZeppLife
 
+
+def start():
+    # Push Mode
+    print(sys.argv)
+    try:
+        Pm = sys.argv[1]
+        pkey = sys.argv[2]
+
+        to_push = ToPush(pkey)
+
+        # 用户名（格式为 13800138000）
+        user = sys.argv[3]
+        # 登录密码
+        passwd = sys.argv[4]
+        # 要修改的步数，直接输入想要修改的步数值，0为随机步数
+        step = sys.argv[5].replace('[', '').replace(']', '')
+    except IndexError as e:
+        print("参数有误: " + str(e))
+        exit(1)
+    
+    user_list = user.split('#')
+    passwd_list = passwd.split('#')
+    setp_array = step.split('-')
+    zl = ZeppLife()
+    if len(user_list) == len(passwd_list):
+        to_push.push_msg = ''
+        for user, passwd in zip(user_list, passwd_list):
+            if len(setp_array) == 2:
+                step = str(random.randint(int(setp_array[0]), int(setp_array[1])))
+                print(f"已设置为随机步数（{setp_array[0]}-{setp_array[1]}）")
+            elif str(step) == '0':
+                step = ''
+            zl.start(user, passwd, step)
+            to_push.push_msg += f"用户：{user} ：修改步数（{step}）" + '\n\n\n'
+
+        push = {
+            'wx': to_push.to_push_wx,
+            'nwx': to_push.to_push_server,
+            'tg': to_push.to_push_tg,
+            'qwx': to_push.to_wxpush,
+            'pp': to_push.to_push_pushplus,
+            'off': to_push.no_push
+        }
+        try:
+            push[Pm]()
+        except KeyError:
+            print('推送选项有误！')
+            exit(0)
+    else:
+        print('用户名和密码数量不对')
+
+
 def main(_user, _passwd, _step):
     """
     主函数
@@ -484,62 +536,13 @@ class ToPush:
         """
         print('不推送')
 
-def start()
-    # Push Mode
-    print(sys.argv)
-    try:
-        Pm = sys.argv[1]
-        pkey = sys.argv[2]
-
-        to_push = ToPush(pkey)
-
-        # 用户名（格式为 13800138000）
-        user = sys.argv[3]
-        # 登录密码
-        passwd = sys.argv[4]
-        # 要修改的步数，直接输入想要修改的步数值，0为随机步数
-        step = sys.argv[5].replace('[', '').replace(']', '')
-    except IndexError as e:
-        print("参数有误: " + str(e))
-        exit(1)
-    
-    user_list = user.split('#')
-    passwd_list = passwd.split('#')
-    setp_array = step.split('-')
-    zl = ZeppLife()
-    if len(user_list) == len(passwd_list):
-        to_push.push_msg = ''
-        for user, passwd in zip(user_list, passwd_list):
-            if len(setp_array) == 2:
-                step = str(random.randint(int(setp_array[0]), int(setp_array[1])))
-                print(f"已设置为随机步数（{setp_array[0]}-{setp_array[1]}）")
-            elif str(step) == '0':
-                step = ''
-            zl.start(user, passwd, step)
-            to_push.push_msg += f"用户：{user} ：修改步数（{step}）" + '\n\n\n'
-
-        push = {
-            'wx': to_push.to_push_wx,
-            'nwx': to_push.to_push_server,
-            'tg': to_push.to_push_tg,
-            'qwx': to_push.to_wxpush,
-            'pp': to_push.to_push_pushplus,
-            'off': to_push.no_push
-        }
-        try:
-            push[Pm]()
-        except KeyError:
-            print('推送选项有误！')
-            exit(0)
-    else:
-        print('用户名和密码数量不对')
-
 
 
 if __name__ == "__main__":
     print("任务启动")
 
     
+
 
 
 
