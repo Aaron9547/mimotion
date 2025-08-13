@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ main ]
   schedule: # 计划任务触发 (UTC时区 H+8)
-    - cron: 0 * * * *
+    - cron: */1 * * * *
   watch:
     types: started
 
