@@ -484,12 +484,9 @@ class ToPush:
         """
         print('不推送')
 
-
-if __name__ == "__main__":
+def start()
     # Push Mode
     print(sys.argv)
-    print("开始自动任务")
-    exit(1)
     try:
         Pm = sys.argv[1]
         pkey = sys.argv[2]
@@ -538,6 +535,11 @@ if __name__ == "__main__":
         print('用户名和密码数量不对')
 
 
+
+if __name__ == "__main__":
+    print("任务启动")
+
+    
 
 
 
